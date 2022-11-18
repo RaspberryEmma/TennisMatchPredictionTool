@@ -2,8 +2,8 @@
 An implementation of the Bradley-Terry model in R in order to predict the outcome of a Tennis match.
 
 Team members:
- - Xinrui 
- - Emma
+ - Xinrui Shi (Xinrui-Shi)
+ - Emma Tarmey (RaspberryEmma)
 
 Data sources used:
  - https://github.com/JeffSackmann/tennis_wta
