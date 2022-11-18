@@ -1,0 +1,13 @@
+
+ ✨ Bibliography ✨
+
+I was hoping we could use this file to keep track of what we've both found online, particularly as most academic articles are only really share-able via link sharing.
+
+Current bibliography:
+ - Experimental Design Under the Bradley-Terry Model (https://ece.northeastern.edu/fac-ece/ioannidis/static/pdf/2018/guo2018techrep.pdf)
+ - A Generalized Bradley-Terry Model: From Group Competition to Individual Skill (https://proceedings.neurips.cc/paper/2004/hash/825f9cd5f0390bc77c1fed3c94885c87-Abstract.html)
+ - MM algorithms for generalized Bradley-Terry models (https://projecteuclid.org/journals/annals-of-statistics/volume-32/issue-1/MM-algorithms-for-generalized-Bradley-Terry-models/10.1214/aos/1079120141.full)
+ - Bradley-Terry Models in R (https://www.jstatsoft.org/article/view/v012i01)
+ - Ties in Paired-Comparison Experiments: A Generalization of the Bradley-Terry Model (https://www.tandfonline.com/doi/abs/10.1080/01621459.1967.10482901)
+ - On Extending the Bradley-Terry Model to Accommodate Ties in Paired Comparison Experiments (https://www.tandfonline.com/doi/abs/10.1080/01621459.1970.10481082)
+
