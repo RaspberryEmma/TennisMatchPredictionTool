@@ -1,11 +1,11 @@
 Package: TennisMatchPredictionTool
 Type: Package
-Title: What the Package Does (Title Case)
+Title: A Tool For Predicting The Outcome Of Tennis Matches
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Xinrui Shi, Emma Tarmey
+Maintainer: Xinrui Shi <xinrui.shi@bristol.ac.uk> Emma Tarmey <emma.tarmey@bristol.ac.uk>
+Description: The tool works by means of implementing a form of the Bradley-Terry model.
+    This model, trained on real-world tennis data, produces a GLM designed to predict whether a given player will win a match.  The parameters for this model then inform the comparison.  The result is a probability representing the likelihood of winning.
+License: GPL-3.0 license
 Encoding: UTF-8
 LazyData: true
