@@ -5,7 +5,9 @@ Team members:
  - Xinrui Shi (Xinrui-Shi)
  - Emma Tarmey (RaspberryEmma)
 
-Data sources used:
+Data sourced from Jeff Sackmann:
  - https://github.com/JeffSackmann/tennis_wta
  - https://github.com/JeffSackmann/tennis_atp
+ 
+ Data licensed under the Creative Commons Licence.
 
