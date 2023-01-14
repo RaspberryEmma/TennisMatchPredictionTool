@@ -55,62 +55,57 @@ match.data <- match.data %>%
 #' @param all.players A data-frame, the players being compared
 #' @param player.i.id An integer, id code present in all.players used for drawing comparison
 #' @return A coefficient beta.i corresponding to the probability of player.i winning
-#'
-construct.bradley.terry.model <- function(match.data, all.players, player.i.id) {
-  # extract corresponding index
-  player.i.index <- which(all.players$player_id == player.i.id)
 
-  # set-up vector response (winner of match) and vector of losses for error-checking
-  player.i.wins.indicator <- as.numeric(match.data$winner_id == player.i.id)
-  player.i.loss.indicator <- as.numeric(match.data$loser_id == player.i.id)
-
+construct.participant.matrix<- function(match.data, all.players) {
   # set up data matrix predictor (participation in match)
-  participant.matrix      <- matrix(0, nrow = nrow(match.data), ncol   = nrow(all.players) )
-
+  participant.matrix <- matrix(0, 
+                               nrow = nrow(match.data), 
+                               ncol = nrow(all.players) )
+  
   # fill data matrix with 1s indicating participation
   for (i in 1:nrow(match.data)) {
     # lookup results of match
     winner.id <- match.data[i, 2]
     loser.id  <- match.data[i, 3]
-
+    
     # lookup list indexes corresponding to players
     winner.index <- which(all.players$player_id == winner.id)
     loser.index  <- which(all.players$player_id == loser.id)
-
+    
     # mark participation of each player in matrix
     participant.matrix[i, winner.index] <- 1
     participant.matrix[i, loser.index] <- 1
   }
-
-  # sanity checks
-  # for testing purposes only
-  dim(match.data)  # input well conditioned
-  dim(all.players) # input well conditioned
-
-  length(player.i.wins.indicator) # = num matches
-  sum(player.i.wins.indicator)    # = num matches player has won, may be zero
-
-  length(player.i.loss.indicator) # = num matches
-  sum(player.i.loss.indicator)    # = num matches player has lost, may be zero
-
-  dim(participant.matrix) # = (num matches x num players)
-  sum(participant.matrix) # = num matches x 2
-  sum(participant.matrix[ , player.i.index ]) # = num wins + num losses
+  return(participant.matrix)
+}
 
 
+construct.wins.indicator <- function(match.data, player.i.id){
+  # extract corresponding index
+  player.i.index <- which(all.players$player_id == player.i.id)
+  
+  # set-up vector response (winner of match) and vector of losses for error-checking
+  player.i.wins.indicator <- as.numeric(match.data$winner_id == player.i.id)
+  
+  return(player.i.wins.indicator)
+  
+}
+
+
+#' Construct a Bradley-Terry Model for use in performing comparisons
+construct.bradley.terry.model <- function(match.data, participant.matrix, player1.wins.indicator) {
+  
   # assemble data-frame appropriate for glm
   model.data <- data.frame( cbind(participant.matrix, player.i.wins.indicator) )
-
+  
   # train glm
-  model <- glm(player.i.wins.indicator ~ ., data = model.data, family = binomial(link = "logit"))
-
+  model <- glm(player1.wins.indicator ~ ., data = model.data, family = binomial(link = "logit"))
+  
   # extract required information
   player.coefficients  <- coef(model)
-  beta.i <- unname( player.coefficients[player.i.index] )
-
-  # return corresponding coefficient
-  return (beta.i)
-}
+  
+  # return  coefficient vector
+  return (player.coefficients)}
 
 
 #' Calculate the probability of player i winning against player j in a given match
@@ -128,17 +123,23 @@ comparison <- function(b.i = NULL, b.j = NULL) {
 # ----- Example of Model Running -----
 
 # random player ids for testing
-player.1.id <- all.players[sample(1:length(all.players[,1]), 1) , 1]
-player.2.id <- all.players[sample(1:length(all.players[,1]), 1) , 1]
-while (player.1.id == player.2.id) { player.2.id <- all.players[sample(1:length(all.players[,1]), 1) , 1] }
+player.id <- all.players[sample(1:length(all.players[,1]), 2) , 1]
 
-beta.1 <- construct.bradley.terry.model(match.data  = match.data,
-                                        all.players = all.players,
-                                        player.i.id = player.1.id)
+player.1.id <- player.id[1]
+player.2.id <- player.id[2]
 
-beta.2 <- construct.bradley.terry.model(match.data  = match.data,
-                                        all.players = all.players,
-                                        player.i.id = player.2.id)
+participant.matrix <- construnct.participant.matrix(match.data, all.players)
+player.1.wins.indicator <- construct.wins.indicator(match.data, player.1.id)
+
+BTmodel1.coef <- construct.bradley.terry.model(match.data, 
+                                               participant.matrix, 
+                                               player.1.wins.indicator)
+
+beta.1 <- unname(BTmodel1.coef[which(all.players$player_id ==
+                                       player.1.id)])/sum(na.omit(BTmodel1.coef)[-1])
+beta.2 <- unname(BTmodel1.coef[which(all.players$player_id ==
+                                       player.2.id)])/sum(na.omit(BTmodel1.coef)[-1])
+
 
 prob.1.wins <- comparison(beta.1, beta.2)
 prob.2.wins <- comparison(beta.2, beta.1)
@@ -147,6 +148,5 @@ message(paste("Player 1:", player.1.id))
 message(paste("Player 2:", player.2.id))
 message(paste("Probability Player 1 Wins:", prob.1.wins))
 message(paste("Probability Player 2 Wins:", prob.2.wins))
-
 
 
