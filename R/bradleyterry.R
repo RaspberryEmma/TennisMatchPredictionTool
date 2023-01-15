@@ -7,12 +7,11 @@ library(tidyverse)
 
 # ----- R Module Code -----
 
-#' Construct a Bradley-Terry Model for use in performing comparisons
+#' Construct a Binary Matrix indicating participation in each match by each player
 #'
 #' @param match.data  A data-frame, the observations of previous comparisons
 #' @param all.players A data-frame, the players being compared
-#' @param player.i.id An integer, id code present in all.players used for drawing comparison
-#' @return A coefficient beta.i corresponding to the probability of player.i winning
+#' @return A binary matrix
 #'
 construct.participant.matrix <- function(match.data, all.players) {
   # set up data matrix predictor (participation in match)
@@ -31,10 +30,10 @@ construct.participant.matrix <- function(match.data, all.players) {
     loser.index  <- which(all.players$player_id == loser.id)
 
     # mark participation of each player in matrix
-    # additionally, encode ages of winner and loser
     participant.matrix[i, winner.index] <- 1
     participant.matrix[i, loser.index]  <- 1
   }
+
   return(participant.matrix)
 }
 
@@ -50,10 +49,10 @@ construct.wins.indicator <- function(match.data, player.i.id){
   # extract corresponding index
   player.i.index <- which(all.players$player_id == player.i.id)
 
-  # set-up vector response (winner of match) and vector of losses for error-checking
+  # set-up vector response (winning matches)
   player.i.wins.indicator <- as.numeric(match.data$winner_id == player.i.id)
 
-  return(player.i.wins.indicator)
+  return (player.i.wins.indicator)
 
 }
 
