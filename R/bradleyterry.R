@@ -32,8 +32,8 @@ construct.participant.matrix <- function(match.data, all.players) {
 
     # mark participation of each player in matrix
     # additionally, encode ages of winner and loser
-    participant.matrix[i, winner.index] <- all_players$player_age[winner.index]
-    participant.matrix[i, loser.index]  <- all_players$player_age[loser.index]
+    participant.matrix[i, winner.index] <- all.players$player_age[winner.index]
+    participant.matrix[i, loser.index]  <- all.players$player_age[loser.index]
   }
   return(participant.matrix)
 }
