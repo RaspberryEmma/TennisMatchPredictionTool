@@ -53,7 +53,6 @@ construct.wins.indicator <- function(match.data, player.i.id){
   player.i.wins.indicator <- as.numeric(match.data$winner_id == player.i.id)
 
   return (player.i.wins.indicator)
-
 }
 
 
@@ -76,7 +75,8 @@ construct.bradley.terry.model <- function(match.data, participant.matrix, player
   player.coefficients  <- coef(model)
 
   # return  coefficient vector
-  return (player.coefficients)}
+  return (player.coefficients)
+}
 
 
 
