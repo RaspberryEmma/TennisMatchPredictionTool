@@ -21,7 +21,7 @@ years  <- atp.singles.years
 if (league == "wta") {years <- wta.singles.years}
 
 year <- years[50]
-match.data <- read.csv( paste( "../data/tennis_", league, "_data/", league, "_matches_", as.character(year), ".csv", sep = "") )
+match.data <- read.csv( paste( "data/tennis_", league, "_data/", league, "_matches_", as.character(year), ".csv", sep = "") )
 
 dim( match.data )
 colnames(match.data)
