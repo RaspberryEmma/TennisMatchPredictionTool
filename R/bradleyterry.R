@@ -4,6 +4,7 @@
 library(tidyverse)
 
 
+
 # ----- R Module Code -----
 
 #' Construct a Bradley-Terry Model for use in performing comparisons
@@ -56,13 +57,38 @@ construct.wins.indicator <- function(match.data, player.i.id){
 }
 
 
+
+#' Construct a numeric vector of ages of each player
+#'
+#' @param all.players
+#' @return A numeric vector, of length equal to the number of matches
+#'
+construct.age.vector <- function(all.players) {
+  player.age.vector <- as.numeric(all.players$player_age)
+  return(player.age.vector)
+}
+
+
+
+#' onstruct a numeric vector of heights of each player
+#'
+#' @param all.players
+#' @return A numeric vector, of length equal to the number of matches
+#'
+construct.height.vector <- function(all.players) {
+  player.height.vector <- as.numeric(all.players$player_height)
+  return(player.height.vector)
+}
+
+
+
 #' Construct a Bradley-Terry Model for use in performing comparisons
 #'
 #' @param match.data
 #' @param participant.matrix
 #' @return A vector of coefficients
 #'
-construct.bradley.terry.model <- function(match.data, participant.matrix, player.i.wins.indicator) {
+construct.bradley.terry.model <- function(match.data, participant.matrix, age.vector, height.vector, player.i.wins.indicator) {
 
   # assemble data-frame appropriate for glm
   model.data <- data.frame( cbind(participant.matrix, player.i.wins.indicator) )
@@ -75,6 +101,7 @@ construct.bradley.terry.model <- function(match.data, participant.matrix, player
 
   # return  coefficient vector
   return (player.coefficients)}
+
 
 
 #' Calculate the probability of player i winning against player j in a given match
