@@ -4,10 +4,8 @@ Title: A Tool For Predicting The Outcome Of Tennis Matches
 Version: 1.0.0
 Author: Xinrui Shi, Emma Tarmey
 Maintainer: Xinrui Shi <xinrui.shi@bristol.ac.uk> Emma Tarmey <emma.tarmey@bristol.ac.uk>
-Description:
-This R tool works by means of implementing a form of the Bradley-Terry model.
-
-This model trains on real-world tennis data, produces a GLM designed to predict whether a given player will win a match.  The parameters for this model then inform the pairwise comparison result.  The result is a probability representing the likelihood of a given player winning a matchup against a second given player.
+Description: This R tool works by means of implementing a form of the Bradley-Terry model.
+	This model trains on real-world tennis data, produces a GLM designed to predict whether a given player will win a match.  The parameters for this model then inform the pairwise comparison result.  The result is a probability representing the likelihood of a given player winning a matchup against a second given player.
 
 License: GPL-3.0 license
 Encoding: UTF-8
