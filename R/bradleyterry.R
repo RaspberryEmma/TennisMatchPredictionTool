@@ -30,8 +30,9 @@ construct.participant.matrix <- function(match.data, all.players) {
     loser.index  <- which(all.players$player_id == loser.id)
 
     # mark participation of each player in matrix
-    participant.matrix[i, winner.index] <- 1
-    participant.matrix[i, loser.index]  <- 1
+    # embed age as additional information within the vector
+    participant.matrix[i, winner.index] <- all.players$player_age[winner.index]
+    participant.matrix[i, loser.index]  <- all.players$player_age[loser.index]
   }
 
   return(participant.matrix)
