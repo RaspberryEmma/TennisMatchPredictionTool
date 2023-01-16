@@ -7,11 +7,11 @@ library(tidyverse)
 
 # ----- R Module Code -----
 
-#' Construct a Binary Matrix indicating participation in each match by each player
+#' Construct a Sparse Matrix indicating participation in each match by each player
 #'
 #' @param match.data  A data-frame, the observations of previous comparisons
 #' @param all.players A data-frame, the players being compared
-#' @return A binary matrix
+#' @return A sparse matrix
 #'
 construct.participant.matrix <- function(match.data, all.players) {
   # set up data matrix predictor (participation in match)
@@ -30,9 +30,8 @@ construct.participant.matrix <- function(match.data, all.players) {
     loser.index  <- which(all.players$player_id == loser.id)
 
     # mark participation of each player in matrix
-    # embed age as additional information within the vector
-    participant.matrix[i, winner.index] <- all.players$player_age[winner.index]
-    participant.matrix[i, loser.index]  <- all.players$player_age[loser.index]
+    participant.matrix[i, winner.index] <- 1
+    participant.matrix[i, loser.index]  <- -1
   }
 
   return(participant.matrix)
